@@ -144,12 +144,8 @@ workbuddy-auto-signin/
 │       └── daily-signin.yml    # GitHub Actions 工作流
 ├── signin.js                   # Node.js 签到脚本（多账户版）
 ├── signin.bat                  # Windows 批处理（本地用）
-├── signin.py                   # Python 原版脚本
 ├── SETUP-GITHUB.md             # 本说明文档
-├── DISCLAIMER.md               # 免责声明
 └── README.md                   # 项目说明
 ```
 
 ---
-
-> ⚠️ **使用前请阅读 [免责声明](DISCLAIMER.md)**
