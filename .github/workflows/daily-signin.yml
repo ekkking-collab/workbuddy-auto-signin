@@ -1,0 +1,38 @@
+name: WorkBuddy 每日签到
+
+on:
+  schedule:
+    - cron: '5 16 * * *'   # UTC 16:05 = 北京时间 00:05
+  workflow_dispatch:        # 支持手动触发
+
+permissions:
+  contents: read
+
+jobs:
+  signin:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 设置 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 随机延迟（防止请求集中）
+        run: |
+          delay=$((RANDOM % 60))
+          echo "随机延迟 $delay 秒..."
+          sleep $delay
+
+      - name: 执行签到
+        env:
+          WORKBUDDY_SESSION: ${{ secrets.WORKBUDDY_SESSION }}
+        run: node signin.js auto
+
+      - name: 记录签到结果
+        if: success()
+        run: |
+          echo "✅ 签到任务执行完成"
+          echo "执行时间: $(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M:%S')"
