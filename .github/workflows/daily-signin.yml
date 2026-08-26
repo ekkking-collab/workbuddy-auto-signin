@@ -29,6 +29,7 @@ jobs:
       - name: 执行签到
         env:
           WORKBUDDY_ACCOUNTS: ${{ secrets.WORKBUDDY_ACCOUNTS }}
+          WORKBUDDY_SESSION: ${{ secrets.WORKBUDDY_SESSION }}
         run: node signin.js auto
 
       - name: 记录签到结果
