@@ -2,7 +2,7 @@ name: WorkBuddy 每日签到
 
 on:
   schedule:
-    - cron: '5 16 * * *'   # UTC 16:05 = 北京时间 00:05
+    - cron: '0 20 * * *'   # UTC 20:00 = 北京时间 04:00
   workflow_dispatch:        # 支持手动触发
 
 permissions:
@@ -28,7 +28,7 @@ jobs:
 
       - name: 执行签到
         env:
-          WORKBUDDY_SESSION: ${{ secrets.WORKBUDDY_SESSION }}
+          WORKBUDDY_ACCOUNTS: ${{ secrets.WORKBUDDY_ACCOUNTS }}
         run: node signin.js auto
 
       - name: 记录签到结果
