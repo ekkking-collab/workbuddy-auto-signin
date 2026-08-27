@@ -185,6 +185,19 @@ function get(url, headers) {
 
 // ── 辅助函数 ──────────────────────────────────────────────
 
+/**
+ * 脱敏处理：手机号只显示后2位，姓名只显示第一个字
+ */
+function maskName(name) {
+  if (!name) return "*";
+  // 手机号：11位数字，只显示后2位
+  if (/^\d{11}$/.test(name)) {
+    return "**" + name.slice(-2);
+  }
+  // 其他：只显示第一个字符
+  return name[0];
+}
+
 function dig(obj, key) {
   if (!obj || typeof obj !== "object") return null;
   if (key in obj && obj[key] !== null && obj[key] !== undefined) return obj[key];
@@ -445,10 +458,11 @@ async function main() {
   const results = [];
   for (let i = 0; i < accounts.length; i++) {
     const acc = accounts[i];
-    console.error(`[${i + 1}/${accounts.length}] 正在处理: ${acc.name}`);
+    const maskedName = maskName(acc.name);
+    console.error(`[${i + 1}/${accounts.length}] 正在处理: ${maskedName}`);
 
     const { code, account, result } = await runForAccount(acc, action);
-    results.push({ account, ...result });
+    results.push({ account: maskedName, ...result });
 
     console.error(`  → ${result.result}: ${result.report || ""}`);
 
